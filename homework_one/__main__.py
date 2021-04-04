@@ -16,6 +16,7 @@ from pyspark.sql import SparkSession
 from helpers.args_setup import *
 from transactions.data_input import *
 from transactions.data_union import union
+from transactions.data_aggregation import *
 from schemas.main_schemas import *
 
 #   Set the input paths.
@@ -38,10 +39,29 @@ cyclists_df.show()
 activities_df.show()
 routes_df.show()
 
+print("Union DataFrame.\n")
+
 #   Create union DF from source DTs.
 union_df = union(cyclists_df, routes_df, activities_df)
+union_df.printSchema()
 union_df.show()
 
-#   Create the partial aggregation DTs.
+print("Aggregations DataFrames.\n")
+
+#   Create aggregation DF by cyclists.
+agg_by_cyclists = aggregateByCyclist(union_df)
+agg_by_cyclists.show()
+
+#   Create aggregation DF by route.
+agg_by_route = aggregateByRoute(union_df)
+agg_by_route.show()
+
+#   Create aggregation DF by province.
+agg_by_province = aggregateByProvince(union_df)
+agg_by_province.show()
+
+#   Create aggregation DF by date.
+agg_by_date = aggregateByDate(union_df)
+agg_by_date.show()
 
 #   Create functions that return the top N of cyclists. (low priority)
