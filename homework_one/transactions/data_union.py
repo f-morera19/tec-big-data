@@ -39,16 +39,12 @@ def union(cyclists, routes, activities):
         cyclists.id == activities.cyclist_id,
         how='left')
 
-    left_join_cyclists_activities_dt.show()
-
     #   Create left join with the previous custructed DT and Routes DT. 
     left_join_activities_routes_dt = \
         left_join_cyclists_activities_dt.join(
             routes,
-            left_join_cyclists_activities_dt.route_id = routes.id,
+            left_join_cyclists_activities_dt.route_code == routes.code,
             how='left')
-
-    left_join_activities_routes_dt.show()
 
     #   Build and return the resulting union dataframe.
     union_dt = \
@@ -56,13 +52,11 @@ def union(cyclists, routes, activities):
             col('id'),
             col('full_name'),
             col('province'),
-            col('route_id'),
-            col('route_name'),
+            col('route_code'),
+            col('name').alias('route_name'),
             col('distance'),
             col('date')
         )
-
-    union_dt.show()
 
     return union_dt
 

@@ -26,9 +26,13 @@ def readCsvIntoDataframe(source, csv_schema, csv_header=False):
     """
     validateInput(source, csv_schema)
 
-    dataframe = spark.read.csv(source,
-                           schema=csv_schema,
-                           header=csv_header)
+    spark = SparkSession.builder.appName("Read Transactions").getOrCreate()
+    spark.sparkContext.setLogLevel("WARN")
+
+    dataframe = spark.read.csv(
+        source, 
+        schema=csv_schema, 
+        header=csv_header)
 
     return dataframe
 

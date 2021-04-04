@@ -13,6 +13,8 @@ Instituto Tecnologico de Costa Rica.
 
 import argparse
 
+MOCK_DATA_FOLDER_PATH = 'mock_data/'
+
 def get_args():
 
     parser = argparse.ArgumentParser(
@@ -29,4 +31,9 @@ def get_args():
 
     args = parser.parse_args()
     
-    return args.c_path, args.a_path, args.r_path
+    # add the mock_data folder to path.
+    c_path = MOCK_DATA_FOLDER_PATH + args.c_path
+    a_path = MOCK_DATA_FOLDER_PATH + args.a_path
+    r_path = MOCK_DATA_FOLDER_PATH + args.r_path
+
+    return c_path, a_path, r_path
