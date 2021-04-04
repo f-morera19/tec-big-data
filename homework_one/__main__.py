@@ -63,5 +63,3 @@ agg_by_province.show()
 #   Create aggregation DF by date.
 agg_by_date = aggregateByDate(union_df)
 agg_by_date.show()
-
-#   Create functions that return the top N of cyclists. (low priority)
