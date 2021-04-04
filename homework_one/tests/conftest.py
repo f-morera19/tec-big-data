@@ -9,4 +9,5 @@ def spark_session():
         .getOrCreate()
 
     yield s
+
     s.stop()
