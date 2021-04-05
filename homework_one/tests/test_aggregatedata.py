@@ -83,8 +83,8 @@ def test_aggregateByProvince_OneOrMoreValuesForEachProvince(spark_session):
 
     # Expected result.
     expected_df = spark_session.createDataFrame([
-        ('San Jose', 532.24),
-        ('Heredia', 213.17)],
+        ('Heredia', 213.17),
+        ('San Jose', 532.24)],
         sum_schema_province)
 
     actual_df.show()
