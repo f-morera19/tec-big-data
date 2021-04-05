@@ -16,6 +16,8 @@ from datetime import datetime
 
 from pyspark.sql import SparkSession
 from pyspark.sql.functions import col, date_format, udf
+from pyspark.sql import functions as F
+
 from pyspark.sql.types import (DateType, IntegerType, FloatType, StructField,
                                StructType, TimestampType)
 
@@ -44,8 +46,8 @@ def union(cyclists, routes, activities):
         routes)
 
     #   Build and return the resulting union dataframe.
-    union_dt = \
-        left_join_activities_routes_dt.select(
+    union_dt = left_join_activities_routes_dt\
+        .select(
             col('id'),
             col('full_name'),
             col('province'),
@@ -53,27 +55,34 @@ def union(cyclists, routes, activities):
             col('name').alias('route_name'),
             col('distance'),
             col('date')
-        )
+        )\
+        .orderBy('full_name')
+        
 
     return union_dt
 
-#    Create left join with activies DT.
+#    Create left join with activies DT, ordered by cyclist name.
 def cyclists_activities_Union(cyclists_df, activities_df):
     result = cyclists_df\
         .join(
             activities_df, 
             cyclists_df.id == activities_df.cyclist_id,
             how='left')\
+        .orderBy('full_name')\
         .drop('cyclist_id')
 
     return result
 
-#    Create left join with activies DT.
+#    Create left join with activies DT, ordered by cyclist name.
 def cyclists_activities_routes_Union(cyclists_activities_df, routes_df):
-    result = cyclists_activities_df.join(
-        routes_df,
-        cyclists_activities_df.route_code == routes_df.code,
-        how='left')
+    result = cyclists_activities_df\
+        .join(
+            routes_df,
+            cyclists_activities_df.route_code == routes_df.code,
+            how='left')\
+        .withColumn('distance', F.round(routes_df['distance'],2))\
+        .orderBy('full_name')\
+        .drop('code')
 
     return result
 

@@ -12,7 +12,7 @@ Instituto Tecnologico de Costa Rica.
 """
 
 from pyspark.sql import SparkSession
-from pyspark.sql.types import IntegerType, StringType, StructField, StructType, DateType, FloatType
+from pyspark.sql.types import IntegerType, StringType, StructField, StructType, DateType, DoubleType
 
 #   Defined schema for Cyclists DataFrames.
 cyclists_schema = StructType(
@@ -27,7 +27,7 @@ routes_schema = StructType(
     [
         StructField('code', IntegerType()),
         StructField('name', StringType()),
-        StructField('distance', FloatType())
+        StructField('distance', DoubleType())
     ])
 
 #   Defined schema for Activies DataFrames.
@@ -35,5 +35,25 @@ activities_schema = StructType(
     [
         StructField('route_code', IntegerType()),
         StructField('cyclist_id', IntegerType()),
+        StructField('date', DateType())
+    ])
+
+cyclists_activities_schema = StructType(
+    [
+        StructField('id', IntegerType()),
+        StructField('full_name', StringType()),
+        StructField('province', StringType()),
+        StructField('route_code', IntegerType()),
+        StructField('date', DateType())
+    ])
+
+cyclists_activities_routes_schema = StructType(
+    [
+        StructField('id', IntegerType()),
+        StructField('full_name', StringType()),
+        StructField('province', StringType()),
+        StructField('route_code', IntegerType()),
+        StructField('route_name', StringType()),
+        StructField('distance', DoubleType()),
         StructField('date', DateType())
     ])
