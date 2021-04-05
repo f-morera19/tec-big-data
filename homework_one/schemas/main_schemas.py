@@ -57,3 +57,27 @@ cyclists_activities_routes_schema = StructType(
         StructField('distance', DoubleType()),
         StructField('date', DateType())
     ])
+
+sum_schema_cyclist = StructType(
+    [
+        StructField('id', IntegerType()),
+        StructField('sum(distance)', DoubleType())
+    ])
+
+sum_schema_route = StructType(
+    [
+        StructField('route_name', StringType()),
+        StructField('sum(distance)', DoubleType())
+    ])
+
+sum_schema_province = StructType(
+    [
+        StructField('province', StringType()),
+        StructField('sum(distance)', DoubleType())
+    ])
+
+sum_schema_date = StructType(
+    [
+        StructField('date', DateType()),
+        StructField('sum(distance)', DoubleType())
+    ])
