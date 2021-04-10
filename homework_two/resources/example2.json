@@ -1,0 +1,17 @@
+{
+    "identificador":"12345",
+    "viajes":[
+       {
+          "codigo_postal_origen":"11502",
+          "codigo_postal_destino":"12501",
+          "kilometros":"5.1",
+          "precio_kilometro":"550"
+       },
+       {
+          "codigo_postal_origen":"20202",
+          "codigo_postal_destino":"41687",
+          "kilometros":"20.4",
+          "precio_kilometro":"420"
+       }
+    ]
+ }
