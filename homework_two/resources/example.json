@@ -1,0 +1,17 @@
+{
+   "identificador":"78625",
+   "viajes":[
+      {
+         "codigo_postal_origen":"11504",
+         "codigo_postal_destino":"11501",
+         "kilometros":"2.8",
+         "precio_kilometro":"550"
+      },
+      {
+         "codigo_postal_origen":"10101",
+         "codigo_postal_destino":"60101",
+         "kilometros":"96.3",
+         "precio_kilometro":"300"
+      }
+   ]
+}

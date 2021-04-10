@@ -2,7 +2,7 @@ FROM openjdk:14-alpine
 
 ENV SPARK_HOME=/usr/lib/python3.7/site-packages/pyspark
 
-WORKDIR /src/homework_one
+WORKDIR /src/homework_two
 
 RUN apk add bash && \
   apk add nano && \
