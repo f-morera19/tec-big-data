@@ -17,11 +17,15 @@ from pyspark.sql.types import *
 from schemas.diber_schemas import *
 
 # Read multiple json files from a folder.
-def readJsonFilesFromPath(path='resources/*.json', show=False):
+def readJsonFilesFromPath(
+    path='resources/*.json', 
+    showdf=False, 
+    showSchema=False):
     """
     Params:
         path (string): Path to read files from.
-        show (boolean): Show the dataframe in console.
+        showdf (boolean): Show the dataframe in console.
+        showSchema (boolean): Show the dataframe schema in console.
     Returns: 
         DataFrame: Read files as DataFrame.
     """
@@ -29,12 +33,14 @@ def readJsonFilesFromPath(path='resources/*.json', show=False):
     spark = SparkSession.builder.appName("Read Transactions").getOrCreate()
     spark.sparkContext.setLogLevel("WARN")
 
-    # Read all JSON files from a folder.
-    input_df = spark.read.option("multiline","true") \
-      .json(path)
+    # Read all JSON files from a folder with rider_schema by default.
+    input_df = spark.read.option("multiline","true").json(path)
 
-    if show: 
+    if showdf:
         input_df.show()
+
+    if showSchema:
+        input_df.printSchema()
 
     return input_df
 
@@ -44,20 +50,26 @@ def flatten_jsonColumn(input_df, showdf=False, showSchema=False):
     Params:
         input_df (DataFrame): data to transform into
         one we can work on.
-        show (boolean): Show the dataframe in console.
+        showdf (boolean): Show the dataframe in console.
         showSchema (boolean): Show the dataframe schema in console.
     Returns: 
         DataFrame: Properly formatted dataframe.
     """
-
-    df_temp = input_df.select(F.col("identificador"),\
-         F.explode(F.col("viajes")))
-
-    result_df = df_temp \
-        .select(\
-            F.col("identificador").alias("user_id"), \
-            F.col("col.*"))
-
+    
+    result_df = input_df \
+        .withColumn(
+            "identificador",
+            F.col("identificador").cast(IntegerType())) \
+        .withColumn(
+            "data",
+            F.explode(F.col("viajes"))) \
+        .select(
+            F.col("identificador").alias("user_id"),
+            F.col("data.codigo_postal_destino").cast(IntegerType()),
+            F.col("data.codigo_postal_origen").cast(IntegerType()),
+            F.col("data.kilometros").cast(DoubleType()),
+            F.col("data.precio_kilometro").cast(DoubleType()))
+    
     if showdf:
         result_df.show()
 

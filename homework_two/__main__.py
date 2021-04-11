@@ -17,7 +17,7 @@ from src.read_input import *
 SRC_FOLDER_PATH = 'resources/*.json'
 
 # Read all json files from default directory.
-riders_df = readJsonFilesFromPath(path=SRC_FOLDER_PATH)
+riders_df = readJsonFilesFromPath(path=SRC_FOLDER_PATH,showdf=True, showSchema=True)
 
 # Extract json properties into columns in main dataframe.
 formatted_df = flatten_jsonColumn(riders_df, showdf=True, showSchema=True)
