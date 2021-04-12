@@ -48,4 +48,39 @@ def get_union_source_data(source_df, showdf=False):
     
     return result_df
 
-# Test command: spark-submit __main__.py
+# Format dataframe to only include fields
+# related to the total income produce by
+# each postal code.
+def get_total_income_formated_df(source_df):
+    """
+    Params:
+        source_df (DataFrame): dataframe to 
+        format.
+    Returns: 
+        DataFrame: form codigo_postal, type, total_income.
+    """
+
+    result_df = source_df.select(
+        F.col("codigo_postal"),
+        F.col("type"),
+        F.col("total_income")
+    )
+    return result_df
+
+# Format dataframe to only include fields
+# related to the total amount of 
+# each postal code.
+def get_total_amount_formated_df(source_df):
+    """
+    Params:
+        source_df (DataFrame): dataframe to 
+        format.
+    Returns: 
+        DataFrame: form codigo_postal, type, total_amount.
+    """
+    result_df = source_df.select(
+        F.col("codigo_postal"),
+        F.col("type"),
+        F.col("total_amount")
+    )
+    return result_df

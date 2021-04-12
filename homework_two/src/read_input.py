@@ -45,7 +45,10 @@ def readJsonFilesFromPath(
     return input_df
 
 # Extract the json properties into their own columns and cast properly.
-def flatten_jsonColumn(input_df, showdf=False, showSchema=False):
+def flatten_jsonColumn(
+    input_df,
+    showdf=False,
+    showSchema=False):
     """
     Params:
         input_df (DataFrame): data to transform into
