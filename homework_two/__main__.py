@@ -16,6 +16,7 @@ from pyspark.sql import SparkSession
 from src.read_input import *
 from src.data_processing import *
 from src.write_data import *
+from src.args_setup import *
 
 # Default variables.
 SRC_FOLDER_PATH = 'resources/*.json'
@@ -23,8 +24,14 @@ DEFAULT_OUTPUT_RIDES_INCOME_PATH = 'output/total_ingresos.csv'
 DEFAULT_OUTPUT_RIDES_AMOUNT_PATH = 'output/total_viajes.csv'
 DEFAULT_OUTPUT_METRICS_PATH = 'output/metricas.csv'
 
-# Read all json files from default directory.
-riders_df = readJsonFilesFromPath(path=SRC_FOLDER_PATH, showdf=True, showSchema=True)
+# Get explicit arguments, if any.
+input_sources = get_args()
+
+# Read json files from path.
+riders_df = readJsonFilesFromPath(
+    path=input_sources,
+    showdf=True,
+    showSchema=True)
 
 # Extract json properties into columns in main dataframe.
 formatted_df = flatten_jsonColumn(riders_df, showdf=True)

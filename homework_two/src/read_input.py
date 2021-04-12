@@ -15,9 +15,11 @@ from pyspark.sql import SparkSession
 from pyspark.sql import functions as F
 from pyspark.sql.types import * 
 
+DEFAULT_ALL_FILES_PATH = 'resources/*.json'
+
 # Read multiple json files from a folder.
 def readJsonFilesFromPath(
-    path='resources/*.json', 
+    path, 
     showdf=False, 
     showSchema=False):
     """
@@ -32,9 +34,15 @@ def readJsonFilesFromPath(
     spark = SparkSession.builder.appName("Read Transactions").getOrCreate()
     spark.sparkContext.setLogLevel("WARN")
 
-    # Read all JSON files from a folder with rider_schema by default.
-    input_df = spark.read.option("multiline","true").json(path)
+    input_df = None
 
+    if (path is None) or (not path): 
+        # Read all JSON files from a folder with rider_schema by default.
+        input_df = spark.read.option("multiline","true").json(DEFAULT_ALL_FILES_PATH)
+    else:
+        # Read explicit files only.
+        input_df = spark.read.option("multiline","true").json(path)
+        
     if showdf:
         input_df.show()
 
@@ -80,5 +88,3 @@ def flatten_jsonColumn(
         result_df.printSchema()
 
     return result_df
-
-    
