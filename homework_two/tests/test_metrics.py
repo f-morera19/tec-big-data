@@ -185,7 +185,7 @@ def test_get_percentil_75(spark_session):
     actual_result = get_percentil(rides_df, '0.75')
     
      # Expected result.
-    expected_result = 10527.5
+    expected_result = 10527.59
     
     print("Expected Result: ", expected_result)
     print("Actual Result: ", actual_result)

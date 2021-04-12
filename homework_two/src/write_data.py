@@ -17,10 +17,5 @@ from pyspark.sql import SparkSession
 def write_csv_to_output(
     src_dataframe, 
     output_path):
-
-    #validate_write_parameters(output_path)
     src_dataframe.write.csv(output_path)
-
-# Validate that writing parameters are valid.
-def validate_write_parameters(output_path):
-    pass
+    print(f"{output_path} succesfully written in memory.")
