@@ -1,0 +1,17 @@
+{
+   "identificador":"78213",
+   "viajes":[
+      {
+         "codigo_postal_origen":"40205",
+         "codigo_postal_destino":"20879",
+         "kilometros":"3.2",
+         "precio_kilometro":"320"
+      },
+      {
+         "codigo_postal_origen":"78563",
+         "codigo_postal_destino":"89671",
+         "kilometros":"26.7",
+         "precio_kilometro":"400"
+      }
+   ]
+}

@@ -14,6 +14,7 @@ Instituto Tecnologico de Costa Rica.
 from pyspark.sql import SparkSession
 from pyspark.sql import functions as F
 from pyspark.sql.types import * 
+from pyspark.sql.window import Window
 
 # Get the union of both postal codes types.
 def get_union_source_data(source_df, showdf=False):
@@ -85,7 +86,7 @@ def get_total_amount_formated_df(source_df):
     )
     return result_df
 
-# Generate varios metrics for Diber data.
+# Generate various metrics for Diber data.
 def get_metrics(source_df):
     """
     Params:
@@ -108,19 +109,24 @@ def get_metrics(source_df):
     most_income_driver_id = str(get_most_income_driver(source_df))
     origin_postal_code_most_income = str(get_origin_postal_code_most_income(source_df))
     destination_postal_code_most_income = str(get_destiny_postal_code_most_income(source_df))
-    #percentil_25 = get_percentil_25(source_df)
-    #percentil_25.show()
-    #print("Percentil 25: ", percentil_25)
+
+    percentil_25 = get_percentil(source_df, '0.25')
+    percentil_50 = get_percentil(source_df, '0.50')
+    percentil_75 = get_percentil(source_df, '0.75')
 
     metrics_data = [
         ("persona_con_mas_kilometros",most_distance_driver_id),
         ("persona_con_mas_ingresos",most_income_driver_id),
+        ("percentil_25",percentil_25),
+        ("percentil_50",percentil_50),
+        ("percentil_75",percentil_75),
         ("codigo_postal_origen_con_mas_ingresos",origin_postal_code_most_income),
         ("odigo_postal_destino_con_mas_ingresos",destination_postal_code_most_income)
     ]
 
-    metrics_df = spark.createDataFrame(data=metrics_data,schema=schema)
-    return metrics_df
+    return spark.createDataFrame(
+        data=metrics_data,
+        schema=schema)
 
 # Get the driver with the most distance.
 def get_most_distance_driver(source_df):
@@ -139,12 +145,15 @@ def get_most_income_driver(source_df):
         .first()[0]
 
 # Get the 25th percentil value.
-def get_percentil_25(source_df):
+def get_percentil(source_df, percentil='0.25'):
     return source_df\
         .groupBy("user_id")\
-        .count()\
-        .groupBy("user_id")\
-        #.agg(F.expr('percentile(user_id, array(0.25))')[0].alias('%25')
+        .agg(
+            F.count(F.col("user_id")).alias("sales_amount"),
+            F.sum(F.col("kilometros") * F.col("precio_kilometro")).alias("total_income"))\
+        .sort(F.col("sales_amount"))\
+        .selectExpr(f'percentile(total_income,{percentil})')\
+        .collect()[0][0]
         
 # Get the origin postal code with the most income generated.
 def get_origin_postal_code_most_income(source_df):
