@@ -23,23 +23,31 @@ def get_union_source_data(source_df, showdf=False):
         source_df (DataFrame): dataframe to 
         unite data from.
     Returns: 
-        DataFrame: form codigo_postal, income, amount.
+        DataFrame: form codigo_postal, total_income, total_amount, type.
     """
 
     cpo_df = source_df\
+        .na.drop(subset=["codigo_postal_origen"]) \
+        .na.fill(value=0, subset=["kilometros"])\
+        .na.fill(value=0, subset=["precio_kilometro"])\
         .groupBy("codigo_postal_origen")\
         .agg(
             F.sum(F.col("kilometros") * F.col("precio_kilometro")).alias("total_income"),
             F.count(F.col("codigo_postal_origen")).alias("total_amount"))\
         .withColumn("type", F.lit("ORIGEN"))\
+        .withColumn('total_income', F.round(F.col('total_income'),2))\
         .withColumnRenamed("codigo_postal_origen", "codigo_postal")
 
     cpd_df = source_df\
+        .na.drop(subset=["codigo_postal_destino"]) \
+        .na.fill(value=0, subset=["kilometros"])\
+        .na.fill(value=0, subset=["precio_kilometro"])\
         .groupBy("codigo_postal_destino")\
         .agg(
             F.sum(F.col("kilometros") * F.col("precio_kilometro")).alias("total_income"),
             F.count(F.col("codigo_postal_destino")).alias("total_amount"))\
         .withColumn("type", F.lit("DESTINO"))\
+        .withColumn('total_income', F.round(F.col('total_income'),2))\
         .withColumnRenamed("codigo_postal_destino", "codigo_postal")
 
     result_df = cpo_df.union(cpd_df).orderBy("codigo_postal")
@@ -146,7 +154,7 @@ def get_most_income_driver(source_df):
 
 # Get the 25th percentil value.
 def get_percentil(source_df, percentil='0.25'):
-    return source_df\
+    result = source_df\
         .groupBy("user_id")\
         .agg(
             F.count(F.col("user_id")).alias("sales_amount"),
@@ -154,6 +162,8 @@ def get_percentil(source_df, percentil='0.25'):
         .sort(F.col("sales_amount"))\
         .selectExpr(f'percentile(total_income,{percentil})')\
         .collect()[0][0]
+    
+    return round(result, 2)
         
 # Get the origin postal code with the most income generated.
 def get_origin_postal_code_most_income(source_df):

@@ -14,7 +14,6 @@ Instituto Tecnologico de Costa Rica.
 from pyspark.sql import SparkSession
 from pyspark.sql import functions as F
 from pyspark.sql.types import * 
-from schemas.diber_schemas import *
 
 # Read multiple json files from a folder.
 def readJsonFilesFromPath(
@@ -68,10 +67,11 @@ def flatten_jsonColumn(
             F.explode(F.col("viajes"))) \
         .select(
             F.col("identificador").alias("user_id"),
-            F.col("data.codigo_postal_destino").cast(IntegerType()),
             F.col("data.codigo_postal_origen").cast(IntegerType()),
+            F.col("data.codigo_postal_destino").cast(IntegerType()),
             F.col("data.kilometros").cast(DoubleType()),
-            F.col("data.precio_kilometro").cast(DoubleType()))
+            F.col("data.precio_kilometro").cast(DoubleType()))\
+        .na.drop(subset=["user_id"])
     
     if showdf:
         result_df.show()

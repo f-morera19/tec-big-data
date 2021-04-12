@@ -24,7 +24,7 @@ DEFAULT_OUTPUT_RIDES_AMOUNT_PATH = 'output/total_viajes.csv'
 DEFAULT_OUTPUT_METRICS_PATH = 'output/metricas.csv'
 
 # Read all json files from default directory.
-riders_df = readJsonFilesFromPath(path=SRC_FOLDER_PATH)
+riders_df = readJsonFilesFromPath(path=SRC_FOLDER_PATH, showdf=True, showSchema=True)
 
 # Extract json properties into columns in main dataframe.
 formatted_df = flatten_jsonColumn(riders_df, showdf=True)
