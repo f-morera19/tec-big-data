@@ -105,17 +105,26 @@ def get_metrics(source_df):
     ])
 
     most_distance_driver_id = get_most_distance_driver(source_df)
-    print("Max driver distance: ", most_distance_driver_id)
+    print("Max distance driver id: ", most_distance_driver_id)
 
+    most_dincome_driver_id = get_most_income_driver(source_df)
+    print("Max income driver id: ", most_distance_driver_id)
 
     metrics_df = spark.createDataFrame(data=[],schema=schema)
     return metrics_df
 
-# Get the driver with the most distance
+# Get the driver with the most distance.
 def get_most_distance_driver(source_df):
-    
     return source_df\
         .groupBy("user_id")\
         .sum("kilometros")\
         .sort(F.col("sum(kilometros)").desc())\
+        .first()[0]
+
+# Get the driver id with the most income.
+def get_most_income_driver(source_df):
+    return source_df\
+        .groupBy("user_id")\
+        .agg(F.sum(F.col("kilometros") * F.col("precio_kilometro")).alias("total_income"))\
+        .sort(F.col("total_income").desc())\
         .first()[0]
