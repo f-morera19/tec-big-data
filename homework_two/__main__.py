@@ -65,5 +65,3 @@ write_csv_to_output(
 total_travels_df.show()
 total_income_df.show()
 metrics_df.show()
-
-# Test command: spark-submit __main__.py
