@@ -21,6 +21,7 @@ from src.write_data import *
 SRC_FOLDER_PATH = 'resources/*.json'
 DEFAULT_OUTPUT_RIDES_INCOME_PATH = 'output/total_ingresos.csv'
 DEFAULT_OUTPUT_RIDES_AMOUNT_PATH = 'output/total_viajes.csv'
+DEFAULT_OUTPUT_METRICS_PATH = 'output/metricas.csv'
 
 # Read all json files from default directory.
 riders_df = readJsonFilesFromPath(path=SRC_FOLDER_PATH)
@@ -39,7 +40,6 @@ total_income_df = get_total_income_formated_df(postal_codes_df)
 
 # Get various metrics for Diber data.
 metrics_df = get_metrics(formatted_df)
-metrics_df.show()
 
 # Write to csv file.
 write_csv_to_output(
@@ -50,7 +50,13 @@ write_csv_to_output(
     total_income_df,
     DEFAULT_OUTPUT_RIDES_INCOME_PATH)
 
+write_csv_to_output(
+    metrics_df,
+    DEFAULT_OUTPUT_METRICS_PATH)
+
+# Console test results visualization.
 total_travels_df.show()
 total_income_df.show()
+metrics_df.show()
 
 # Test command: spark-submit __main__.py
