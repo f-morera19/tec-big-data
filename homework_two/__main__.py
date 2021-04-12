@@ -39,6 +39,7 @@ total_income_df = get_total_income_formated_df(postal_codes_df)
 
 # Get various metrics for Diber data.
 metrics_df = get_metrics(formatted_df)
+metrics_df.show()
 
 # Write to csv file.
 write_csv_to_output(

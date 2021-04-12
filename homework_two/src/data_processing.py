@@ -104,13 +104,22 @@ def get_metrics(source_df):
         StructField("value", StringType(), False)
     ])
 
-    most_distance_driver_id = get_most_distance_driver(source_df)
-    print("Max distance driver id: ", most_distance_driver_id)
+    most_distance_driver_id = str(get_most_distance_driver(source_df))
+    most_income_driver_id = str(get_most_income_driver(source_df))
+    origin_postal_code_most_income = str(get_origin_postal_code_most_income(source_df))
+    destination_postal_code_most_income = str(get_destiny_postal_code_most_income(source_df))
+    #percentil_25 = get_percentil_25(source_df)
+    #percentil_25.show()
+    #print("Percentil 25: ", percentil_25)
 
-    most_dincome_driver_id = get_most_income_driver(source_df)
-    print("Max income driver id: ", most_distance_driver_id)
+    metrics_data = [
+        ("persona_con_mas_kilometros",most_distance_driver_id),
+        ("persona_con_mas_ingresos",most_income_driver_id),
+        ("codigo_postal_origen_con_mas_ingresos",origin_postal_code_most_income),
+        ("odigo_postal_destino_con_mas_ingresos",destination_postal_code_most_income)
+    ]
 
-    metrics_df = spark.createDataFrame(data=[],schema=schema)
+    metrics_df = spark.createDataFrame(data=metrics_data,schema=schema)
     return metrics_df
 
 # Get the driver with the most distance.
@@ -126,5 +135,33 @@ def get_most_income_driver(source_df):
     return source_df\
         .groupBy("user_id")\
         .agg(F.sum(F.col("kilometros") * F.col("precio_kilometro")).alias("total_income"))\
+        .sort(F.col("total_income").desc())\
+        .first()[0]
+
+# Get the 25th percentil value.
+def get_percentil_25(source_df):
+    return source_df\
+        .groupBy("user_id")\
+        .count()\
+        .groupBy("user_id")\
+        #.agg(F.expr('percentile(user_id, array(0.25))')[0].alias('%25')
+        
+# Get the origin postal code with the most income generated.
+def get_origin_postal_code_most_income(source_df):
+    return source_df\
+        .groupBy("codigo_postal_origen")\
+        .agg(
+            F.sum(F.col("kilometros") * F.col("precio_kilometro")).alias("total_income")
+        )\
+        .sort(F.col("total_income").desc())\
+        .first()[0]
+        
+# Get the destiny postal code with the most income generated.
+def get_destiny_postal_code_most_income(source_df):
+    return source_df\
+        .groupBy("codigo_postal_destino")\
+        .agg(
+            F.sum(F.col("kilometros") * F.col("precio_kilometro")).alias("total_income")
+        )\
         .sort(F.col("total_income").desc())\
         .first()[0]
