@@ -84,3 +84,38 @@ def get_total_amount_formated_df(source_df):
         F.col("total_amount")
     )
     return result_df
+
+# Generate varios metrics for Diber data.
+def get_metrics(source_df):
+    """
+    Params:
+        source_df (DataFrame): dataframe with the form:
+        user_id, codigo_postal_destino, odigo_postal_origen, 
+        kilometros, precio_kilometro.
+    Returns: 
+        DataFrame: form metric_type, value.
+    """
+
+    spark = SparkSession.builder.appName("Read Transactions").getOrCreate()
+    spark.sparkContext.setLogLevel("WARN")
+
+    schema = StructType([ \
+        StructField("metric_type", StringType(), False), \
+        StructField("value", StringType(), False)
+    ])
+
+    most_distance_driver_id = get_most_distance_driver(source_df)
+    print("Max driver distance: ", most_distance_driver_id)
+
+
+    metrics_df = spark.createDataFrame(data=[],schema=schema)
+    return metrics_df
+
+# Get the driver with the most distance
+def get_most_distance_driver(source_df):
+    
+    return source_df\
+        .groupBy("user_id")\
+        .sum("kilometros")\
+        .sort(F.col("sum(kilometros)").desc())\
+        .first()[0]
