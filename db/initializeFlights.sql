@@ -1,7 +1,7 @@
 -- Initialize the database. Create "flights" table.
 BEGIN;
 
-CREATE TABLE flights (
+CREATE TABLE tarea3 (
   age integer NOT NULL,
   light_distance integer NOT NULL,
   seat_comfort integer NOT NULL,

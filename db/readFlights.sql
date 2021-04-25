@@ -1,1 +1,3 @@
-select * from flights
+select * 
+from tarea3
+limit 10
