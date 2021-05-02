@@ -23,6 +23,6 @@ RUN pip3 install notebook
 RUN pip3 install findspark
 RUN ln /usr/bin/python3.7 /usr/bin/python
 
-WORKDIR /src/homework_three
+WORKDIR /src/project
 
 COPY . /src

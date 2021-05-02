@@ -11,8 +11,11 @@ Instituto Tecnologico de Costa Rica.
 2021
 """
 
+# Dependencies.
 from pyspark.sql import SparkSession
 from pyspark.sql.types import IntegerType, StringType, StructField, StructType
+
+RESOURCES_FOLDER_PATH = 'resources/'
 
 #   Reads the source csv data into a Spark dataframe and returns it.
 def readCsvIntoDataframe(source, csv_schema, csv_header=False):
@@ -29,7 +32,7 @@ def readCsvIntoDataframe(source, csv_schema, csv_header=False):
     spark.sparkContext.setLogLevel("WARN")
 
     dataframe = spark.read.csv(
-        source, 
+        RESOURCES_FOLDER_PATH + source, 
         schema=csv_schema, 
         header=csv_header)
 
