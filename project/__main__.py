@@ -31,9 +31,6 @@ original_critics_df = readCsvIntoDataframe(
     source=CRITICS_CSV_RESOURCE_PATH,
     csv_schema=critics_schema)
 
-original_sales_df.show()
-original_critics_df.show()
-
 # Fix and clean boths dataframes data formats.
 sales_df = format_sales_dataframe(original_sales_df, True)
 critics_df = format_critics_dataframe(original_critics_df, True)

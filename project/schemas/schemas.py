@@ -27,13 +27,13 @@ critics_schema = StructType(
         StructField('attribute', StringType()),
         StructField('release_date', StringType()),
         StructField('link', StringType()),
-        StructField('critic_positive', IntegerType()),
-        StructField('critic_neutral', IntegerType()),
-        StructField('critic_negative', IntegerType()),
+        StructField('c_pos', IntegerType()),
+        StructField('c_neu', IntegerType()),
+        StructField('c_neg', IntegerType()),
         StructField('metascore', IntegerType()),
-        StructField('user_positive', IntegerType()),
-        StructField('user_neutral', IntegerType()),
-        StructField('user_negative', IntegerType()),
+        StructField('u_pos', IntegerType()),
+        StructField('u_neu', IntegerType()),
+        StructField('u_neg', IntegerType()),
         StructField('metacritic_user_score', StringType())
     ])
 

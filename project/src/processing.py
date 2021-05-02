@@ -94,12 +94,12 @@ def format_critics_dataframe(critics_source_df, showdf=False):
         .drop("link") \
         .drop("publisher") \
         .drop("developer") \
-        .na.fill(value=0, subset=["critic_positive"]) \
-        .na.fill(value=0, subset=["critic_neutral"]) \
-        .na.fill(value=0, subset=["critic_negative"]) \
-        .na.fill(value=0, subset=["user_positive"]) \
-        .na.fill(value=0, subset=["user_neutral"]) \
-        .na.fill(value=0, subset=["user_negative"]) \
+        .na.fill(value=0, subset=["c_pos"]) \
+        .na.fill(value=0, subset=["c_neu"]) \
+        .na.fill(value=0, subset=["c_neg"]) \
+        .na.fill(value=0, subset=["u_pos"]) \
+        .na.fill(value=0, subset=["u_neu"]) \
+        .na.fill(value=0, subset=["u_neg"]) \
         .na.fill(value="T", subset=["esrb_rating"]) \
         .withColumn("metacritic_user_score", F.trim(F.col("metacritic_user_score"))) \
         .withColumn('metacritic_user_score', F.upper(F.col('metacritic_user_score'))) \
