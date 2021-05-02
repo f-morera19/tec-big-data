@@ -32,5 +32,11 @@ original_critics_df = readCsvIntoDataframe(
     csv_schema=critics_schema)
 
 # Fix and clean boths dataframes data formats.
-sales_df = format_sales_dataframe(original_sales_df, True)
-critics_df = format_critics_dataframe(original_critics_df, True)
+sales_df = format_sales_dataframe(original_sales_df, False)
+critics_df = format_critics_dataframe(original_critics_df, False)
+
+# Join both dataframes.
+joint_df = data_join(
+    sales_source_df=sales_df,
+    critics_source_df=critics_df,
+    showdf=True)

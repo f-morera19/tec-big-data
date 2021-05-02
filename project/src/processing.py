@@ -165,3 +165,32 @@ def format_critics_dataframe(critics_source_df, showdf=False):
         formatted_df.show()
 
     return formatted_df
+
+# Join both dataframes by their names.
+def data_join(sales_source_df, critics_source_df, showdf=False):
+    """
+    Params:
+        sales_source_df (DataFrame): Sales dataframe to format.
+        critics_source_df (DataFrame): Critics dataframe to format.
+    Returns: 
+        Resulting dataframe from joing the sales and critic ones.
+    """
+
+    # Drop the regular name column from both dataframes
+    # to avoid conflicts.
+    sales_source_df = sales_source_df \
+        .drop("name")
+    critics_source_df = critics_source_df \
+        .drop("name")
+
+    # Join both columns by the videogame name.
+    joint_df = sales_source_df.join(
+        critics_source_df, 
+        sales_source_df.formatted_name == critics_source_df.metacritic_formatted_name)
+
+    if showdf:
+        joint_df.show()
+
+    print(f"Joint a total amount of: {joint_df.count()} rows.")
+
+    return joint_df

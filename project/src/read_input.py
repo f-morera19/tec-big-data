@@ -36,6 +36,8 @@ def readCsvIntoDataframe(source, csv_schema, csv_header=False):
         schema=csv_schema, 
         header=csv_header)
 
+    print(f"Read a total of: {dataframe.count()} rows for {source}.")
+
     return dataframe
 
 #   Validate the data source and the schema.
