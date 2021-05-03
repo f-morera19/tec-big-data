@@ -85,7 +85,7 @@ formatted_critics_schema = StructType(
         StructField('isOtherPlatform', IntegerType()),
         StructField('isERating', IntegerType()),
         StructField('isTRating', IntegerType()),
-        StructField('esisMRatingrb_rating', IntegerType()),
+        StructField('isMRating', IntegerType()),
         StructField('isOtherRating', IntegerType()),
         StructField('isActionGenre', IntegerType()),
         StructField('isActionAdventureGenre', IntegerType()),

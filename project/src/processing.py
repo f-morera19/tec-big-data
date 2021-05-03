@@ -157,7 +157,7 @@ def format_critics_dataframe(critics_source_df, showdf=False):
             .otherwise(0)) \
         .withColumn(
             "metacritic_user_score",
-            F.col("metacritic_user_score").cast(IntegerType())) \
+            F.col("metacritic_user_score").cast(DoubleType())) \
         .drop("genre") \
         .drop("players") \
         .drop("platform") \
