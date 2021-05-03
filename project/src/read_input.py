@@ -28,7 +28,13 @@ def readCsvIntoDataframe(source, csv_schema, csv_header=False):
     """
     validateInput(source, csv_schema)
 
-    spark = SparkSession.builder.appName("Read Transactions").getOrCreate()
+    spark = SparkSession \
+        .builder \
+        .appName("Basic JDBC pipeline") \
+        .config("spark.driver.extraClassPath", "postgresql-42.2.14.jar") \
+        .config("spark.executor.extraClassPath", "postgresql-42.2.14.jar") \
+        .getOrCreate()
+
     spark.sparkContext.setLogLevel("WARN")
 
     dataframe = spark.read.csv(

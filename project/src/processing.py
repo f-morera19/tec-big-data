@@ -184,9 +184,12 @@ def data_join(sales_source_df, critics_source_df, showdf=False):
         .drop("name")
 
     # Join both columns by the videogame name.
-    joint_df = sales_source_df.join(
-        critics_source_df, 
-        sales_source_df.formatted_name == critics_source_df.metacritic_formatted_name)
+    joint_df = sales_source_df \
+        .join(
+            critics_source_df, 
+            sales_source_df.formatted_name == critics_source_df.metacritic_formatted_name) \
+        .drop("metacritic_formatted_name")
+        
 
     if showdf:
         joint_df.show()
