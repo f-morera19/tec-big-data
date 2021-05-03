@@ -21,6 +21,8 @@ from schemas.schemas import *
 SALES_CSV_RESOURCE_PATH = 'vg_sales.csv'
 CRITICS_CSV_RESOURCE_PATH = 'vg_metacritic.csv'
 SALES_DB_NAME = 'vg_sales'
+CRITICS_DB_NAME = 'vg_critics'
+RESULTS_DB_NAME = 'vg_critic_sales'
 
 # Read videogame sales data into DataFrame.
 original_sales_df = readCsvIntoDataframe(
@@ -34,15 +36,18 @@ original_critics_df = readCsvIntoDataframe(
 
 # Fix and clean boths dataframes data formats.
 sales_df = format_sales_dataframe(original_sales_df, False)
-sales_df.printSchema()
 critics_df = format_critics_dataframe(original_critics_df, False)
 critics_df.printSchema()
 
 # Save both dataframes in PostgreSQL before mergin.
 save_data_DB(sales_df, SALES_DB_NAME)
+save_data_DB(critics_df, CRITICS_DB_NAME)
 
 # Join both dataframes.
-joint_df = data_join(
+result_df = data_join(
     sales_source_df=sales_df,
     critics_source_df=critics_df,
     showdf=True)
+
+# Save in DB the result dataframe after joining the original ones.
+save_data_DB(result_df, RESULTS_DB_NAME)

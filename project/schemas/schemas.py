@@ -57,3 +57,39 @@ sales_schema = StructType(
         StructField('other_sales', DoubleType()),
         StructField('year', StringType())
     ])
+
+formatted_sales_schema = StructType(
+    [
+        StructField('name', StringType()),
+        StructField('critic_score', DoubleType()),    
+        StructField('user_score', DoubleType()),
+        StructField('total_shipped', DoubleType()),
+        StructField('year', IntegerType()), 
+        StructField('formatted_name', StringType())
+    ])
+
+formatted_critics_schema = StructType(
+    [
+        StructField('name', StringType()),
+        StructField('c_pos', IntegerType()),
+        StructField('c_neu', IntegerType()),
+        StructField('c_neg', IntegerType()),
+        StructField('metascore', IntegerType()),
+        StructField('u_pos', IntegerType()),
+        StructField('u_neu', IntegerType()),
+        StructField('u_neg', IntegerType()),
+        StructField('metacritic_user_score', DoubleType()),
+        StructField('metacritic_formatted_name', StringType()),
+        StructField('isPCPlatform', IntegerType()),
+        StructField('isX360Platform', IntegerType()),   
+        StructField('isOtherPlatform', IntegerType()),
+        StructField('isERating', IntegerType()),
+        StructField('isTRating', IntegerType()),
+        StructField('esisMRatingrb_rating', IntegerType()),
+        StructField('isOtherRating', IntegerType()),
+        StructField('isActionGenre', IntegerType()),
+        StructField('isActionAdventureGenre', IntegerType()),
+        StructField('isOtherGenre', IntegerType()),
+        StructField('isOnePlayerOnly', IntegerType()),
+        StructField('hasOnlineMultiplayer', IntegerType())
+    ])

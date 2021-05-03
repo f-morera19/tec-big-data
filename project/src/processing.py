@@ -32,7 +32,9 @@ def format_sales_dataframe(sales_source_df, showdf=False):
         outputCols=["user_score"]
     )
 
-    sales_source_df = imputer.fit(sales_source_df).transform(sales_source_df)
+    sales_source_df = imputer \
+        .fit(sales_source_df) \
+        .transform(sales_source_df)
 
     # Remove the unnecessary qualifying columns.
     sales_source_df = sales_source_df \

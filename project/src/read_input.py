@@ -18,7 +18,10 @@ from pyspark.sql.types import IntegerType, StringType, StructField, StructType
 RESOURCES_FOLDER_PATH = 'resources/'
 
 #   Reads the source csv data into a Spark dataframe and returns it.
-def readCsvIntoDataframe(source, csv_schema, csv_header=False):
+def readCsvIntoDataframe(
+    source,
+    csv_schema,
+    csv_header=False):
     """
     Params:
         source: String. Path of source csv file to read.

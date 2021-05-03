@@ -34,7 +34,7 @@ def save_data_DB(source_df, DB_name):
         .option("url", "jdbc:postgresql://host.docker.internal:5433/postgres") \
         .option("user", DEF_USER_NAME) \
         .option("password", DEF_USER_PASSWORD) \
-        .option("dbtable", 'vg_sales') \
+        .option("dbtable", DB_name) \
         .save()
 
     print("Clean flights data saved!\n")
