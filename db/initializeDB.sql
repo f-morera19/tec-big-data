@@ -51,7 +51,6 @@ CREATE TABLE vg_critic_sales (
   user_neutral integer NOT NULL,
   user_negative integer NOT NULL,
   metacritic_userscore decimal NOT NULL,
-  metacritic_formatted_name varchar(255) NOT NULL,
   isPCPlatform bit NOT NULL,
   isX360Platform bit NOT NULL,
   isOtherPlatform bit NOT NULL,

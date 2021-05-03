@@ -93,3 +93,32 @@ formatted_critics_schema = StructType(
         StructField('isOnePlayerOnly', IntegerType()),
         StructField('hasOnlineMultiplayer', IntegerType())
     ])
+
+formatted_critics_sales_schema = StructType(
+    [
+        StructField('critic_score', DoubleType()),    
+        StructField('user_score', DoubleType()),
+        StructField('total_shipped', DoubleType()),
+        StructField('year', IntegerType()), 
+        StructField('formatted_name', StringType()),
+        StructField('critic_positive', IntegerType()),
+        StructField('critic_neutral', IntegerType()),
+        StructField('critic_negative', IntegerType()),
+        StructField('metascore', IntegerType()),
+        StructField('user_positive', IntegerType()),
+        StructField('user_neutral', IntegerType()),
+        StructField('user_negative', IntegerType()),
+        StructField('metacritic_user_score', DoubleType()),
+        StructField('isPCPlatform', IntegerType()),
+        StructField('isX360Platform', IntegerType()),   
+        StructField('isOtherPlatform', IntegerType()),
+        StructField('isERating', IntegerType()),
+        StructField('isTRating', IntegerType()),
+        StructField('isMRating', IntegerType()),
+        StructField('isOtherRating', IntegerType()),
+        StructField('isActionGenre', IntegerType()),
+        StructField('isActionAdventureGenre', IntegerType()),
+        StructField('isOtherGenre', IntegerType()),
+        StructField('isOnePlayerOnly', IntegerType()),
+        StructField('hasOnlineMultiplayer', IntegerType())
+    ])
